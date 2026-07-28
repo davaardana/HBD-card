@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Undangan Spesial untuk Talitha ✉️✨</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Great+Vibes&family=Pinyon+Script&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+    <!-- Three.js Engine for Hyperspeed Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP Animation Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <!-- CSS stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Fullscreen Hyperspeed Canvas Background (Pink/Magenta Gradient) -->
+    <div id="hyperspeed-container" class="hyperspeed-container"></div>
+
+    <!-- Local Audio Player for "Awal Kisah Selamanya" -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="awalkisahselamanya.mp3" type="audio/mpeg">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-wedding-love-116035.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Audio Control Widget -->
+    <div class="music-widget" id="music-widget">
+        <div class="disc-container">
+            <div class="vinyl-disc" id="vinyl-disc"></div>
+            <div class="music-note-icon">🎵</div>
+        </div>
+        <div class="song-info">
+            <span class="song-title">Awal Kisah Selamanya</span>
+            <span class="song-status" id="song-status">Tap love to play music 💖</span>
+        </div>
+        <button class="music-toggle-btn" id="music-toggle-btn" aria-label="Toggle Music">
+            <svg id="play-icon" viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+            <svg id="pause-icon" viewBox="0 0 24 24" class="icon hidden"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+    </div>
+
+    <!-- Mouse Cursor Trail Container (Pure Love Vector Trail) -->
+    <div id="love-cursor-container" class="love-cursor-container"></div>
+
+    <!-- Floating Sparkles Container -->
+    <div id="particles-container"></div>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="app-container">
+
+        <!-- ==========================================
+             HALAMAN 1: SURAT TERTUTUP
+             ========================================== -->
+        <section class="page page-closed active" id="page-1">
+            <div class="page1-content">
+                <!-- Stippled Red Heart PNG (Posisikan di Belakang Teks) -->
+                <div class="heart-stipple-wrapper" id="heart-stipple-click">
+                    <img src="stippled_red_heart.png" class="heart-stipple-png" alt="Stippled Red Heart">
+                </div>
+
+                <!-- Calligraphy Heading Top Left (Hello Talitha,) -->
+                <div class="header-calligraphy">
+                    <span class="word-hello">Hello</span>
+                    <span class="word-love">Talitha,</span>
+                </div>
+
+                <!-- Envelope Sealed Container -->
+                <div class="envelope-wrapper" id="closed-envelope-wrapper">
+                    <div class="envelope closed-envelope" id="envelope-interactive">
+                        <div class="env-body">
+                            <div class="env-fold-left"></div>
+                            <div class="env-fold-right"></div>
+                            <div class="env-fold-bottom"></div>
+                            <div class="env-flap-top"></div>
+                        </div>
+
+                        <!-- Wax Seal in Center -->
+                        <div class="wax-seal" id="wax-seal">
+                            <div class="wax-seal-inner">
+                                <svg class="seal-heart" viewBox="0 0 24 24">
+                                    <path fill="#8b0000" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </div>
+                            <div class="pulse-ring"></div>
+                        </div>
+                    </div>
+
+                    <!-- Prompt Instruction: Klik Love Pada Surat -->
+                    <div class="tap-hint">
+                        <span class="hint-icon">💖</span>
+                        <span class="hint-text">Klik Love Pada Surat</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================
+             HALAMAN 2: SURAT TERBUKA
+             ========================================== -->
+        <section class="page page-opened hidden" id="page-2">
+            <div class="dark-mood-bg"></div>
+
+            <div class="page2-content">
+                <!-- Floating Top Navigation Bar (Tombol Tutup Surat Melayang Di Kiri Atas) -->
+                <div class="top-nav-bar">
+                    <button class="back-btn" id="btn-back-to-p1">
+                        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                        Tutup Surat
+                    </button>
+                </div>
+
+                <!-- Open Crimson Envelope Container -->
+                <div class="open-envelope-container">
+                    <div class="crimson-envelope">
+                        <div class="env-open-flap-top"></div>
+                        <div class="env-open-inner-shadow"></div>
+
+                        <!-- Ripped / Torn Deckle Edge Paper inside envelope -->
+                        <div class="torn-paper-letter" id="torn-letter">
+                            <div class="paper-texture"></div>
+                            <div class="torn-edge-top"></div>
+                            
+                            <div class="letter-inner-content">
+                                <h1 class="letter-salutation">Dear Talitha,</h1>
+                                
+                                <div class="letter-body">
+                                    <p class="highlight-text">Maaf ya untuk semuanya... 🥺💖</p>
+                                    <p>Dari lubuk hati yang paling dalam, aku mau minta maaf kalau pernah bikin kamu sedih, kecewa, atau pernah nyakitin perasaan kamu, baik secara sengaja maupun enggak sengaja.</p>
+                                    <p>Kamu tuh sosok yang sangat berharga dan spesial. Aku beneran nyesel atas segala kesalahan yang pernah ada. I hope you can find peace, joy, and forgive me in your heart.</p>
+                                    
+                                    <div class="gen-z-note">
+                                        <p>✨ <em>I’m so so sorry for everything, Talitha... honestly no excuses at all. You deserve all the peace, love & happiness in the world, and I truly hope we can be good again. For real, I'm genuinely sorry from the bottom of my heart 💖</em></p>
+                                    </div>
+                                </div>
+
+                                <div class="letter-closing">
+                                    <span class="closing-phrase">With all my heart & sincere apology,</span>
+                                    <span class="letter-signature">Special For Talitha 💖</span>
+                                </div>
+                            </div>
+                            
+                            <div class="torn-edge-bottom"></div>
+                        </div>
+
+                        <!-- Front pockets of burgundy envelope -->
+                        <div class="env-open-pocket-left"></div>
+                        <div class="env-open-pocket-right"></div>
+                        <div class="env-open-pocket-bottom"></div>
+
+                        <!-- Envelope Details Typography -->
+                        <div class="env-brand-left">
+                            SPECIAL EDITION<br>FOR TALITHA
+                        </div>
+                        <div class="env-brand-right">
+                            WITH SINCERE<br>LOVE & APOLOGY
+                        </div>
+
+                        <!-- Silk Cream Ribbon Bow overlay -->
+                        <div class="cream-ribbon-wrapper">
+                            <div class="ribbon-bow">
+                                <div class="bow-knot"></div>
+                                <div class="bow-loop loop-left"></div>
+                                <div class="bow-loop loop-right"></div>
+                                <div class="ribbon-tail tail-left"></div>
+                                <div class="ribbon-tail tail-right"></div>
+                                <div class="ribbon-tail tail-long"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

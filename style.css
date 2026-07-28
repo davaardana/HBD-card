@@ -1,0 +1,884 @@
+/* ==========================================================================
+   UNDANGAN DIGITAL SPESIAL UNTUK TALITHA (REACT BITS HYPERSPEED PINK GRADIENT)
+   ========================================================================== */
+
+/* Reset & Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --color-paper-bg: transparent;
+    --color-pink-primary: #FF2A85;
+    --color-magenta-bright: #E040FB;
+    --color-purple-dark: #4A0E4E;
+    --color-crimson-env: #7A0C16;
+    --font-script: 'Great Vibes', 'Alex Brush', cursive;
+    --font-calligraphy: 'Pinyon Script', 'Alex Brush', cursive;
+    --font-typewriter: 'Courier Prime', monospace;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: #060208;
+    font-family: var(--font-sans);
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Fullscreen Hyperspeed Background Container (Pink & Magenta Gradients) */
+.hyperspeed-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.hyperspeed-container canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Pure Love Vector Cursor Trail */
+.love-cursor-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+.text-cursor-item {
+    position: absolute;
+    user-select: none;
+    white-space: nowrap;
+    pointer-events: none;
+    transform-origin: center center;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    will-change: transform, opacity;
+}
+
+.text-cursor-item svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    filter: drop-shadow(0 2px 8px rgba(255, 42, 133, 0.9));
+}
+
+/* Music Widget (Floating top-right) */
+.music-widget {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+    background: rgba(25, 10, 25, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 42, 133, 0.4);
+    border-radius: 40px;
+    padding: 6px 14px 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    max-width: 90vw;
+}
+
+.disc-container {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.vinyl-disc {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, #222 20%, #111 21%, #111 40%, #ff2a85 41%, #ff2a85 45%, #111 46%);
+    border: 2px solid #555;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.vinyl-disc.spinning {
+    animation: rotateVinyl 4s linear infinite;
+}
+
+@keyframes rotateVinyl {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.music-note-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    pointer-events: none;
+}
+
+.song-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.song-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #FF66B2;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.song-status {
+    font-size: 9.5px;
+    color: #E0E0E0;
+    white-space: nowrap;
+}
+
+.music-toggle-btn {
+    background: #FF2A85;
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.2s ease, background-color 0.2s;
+}
+
+.music-toggle-btn .icon {
+    width: 14px;
+    height: 14px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Main App Container Frame (TRANSPARENT, FULL WEBGL HYPERSPEED) */
+.app-container {
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    position: relative;
+    box-shadow: none;
+    overflow: hidden;
+    background: transparent !important;
+}
+
+/* Page Section Base */
+.page {
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.page.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+    z-index: 10;
+}
+
+/* ==========================================================================
+   HALAMAN 1: SURAT TERTUTUP
+   ========================================================================== */
+.page-closed {
+    background: transparent !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 35px 25px 45px 25px;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Red Heart PNG (Di Belakang Teks Hello Talitha, Agak ke Kanan) */
+.heart-stipple-wrapper {
+    position: absolute;
+    top: -20px;
+    right: -75px;
+    width: 320px;
+    height: 320px;
+    z-index: 2; /* Paling Belakang */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.heart-stipple-wrapper:hover {
+    transform: scale(1.04);
+}
+
+.heart-stipple-png {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.92;
+    filter: drop-shadow(0 6px 20px rgba(255, 42, 133, 0.5));
+}
+
+/* Calligraphy Heading Top Left (HELLO TALITHA PALING DEPAN) */
+.header-calligraphy {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    z-index: 30; /* MAJU PALING DEPAN */
+    position: relative;
+    pointer-events: none;
+}
+
+.word-hello {
+    font-family: var(--font-script);
+    font-size: 78px;
+    color: #FFF;
+    line-height: 0.9;
+    letter-spacing: 1px;
+    text-shadow: 
+        0 0 15px rgba(255, 42, 133, 0.9),
+        0 0 30px rgba(224, 64, 251, 0.7),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.word-love {
+    font-family: var(--font-script);
+    font-size: 88px;
+    color: #FFF;
+    line-height: 0.9;
+    margin-left: 45px;
+    margin-top: -10px;
+    text-shadow: 
+        0 0 15px rgba(255, 42, 133, 0.9),
+        0 0 30px rgba(224, 64, 251, 0.7),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Envelope Container */
+.envelope-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    z-index: 10;
+}
+
+.envelope {
+    position: relative;
+    width: 330px;
+    height: 220px;
+    background: #FAF8F3;
+    border-radius: 4px;
+    box-shadow: 
+        0 20px 45px rgba(0, 0, 0, 0.5),
+        0 0 25px rgba(255, 42, 133, 0.3);
+    transform: rotate(-3.5deg);
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.envelope:hover {
+    transform: rotate(-1deg) scale(1.03);
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.6);
+}
+
+/* Envelope Folds */
+.env-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.env-fold-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 110px solid transparent;
+    border-bottom: 110px solid transparent;
+    border-left: 165px solid #F6F1E7;
+    filter: drop-shadow(2px 0 3px rgba(0,0,0,0.05));
+}
+
+.env-fold-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 110px solid transparent;
+    border-bottom: 110px solid transparent;
+    border-right: 165px solid #F3EDE1;
+    filter: drop-shadow(-2px 0 3px rgba(0,0,0,0.05));
+}
+
+.env-fold-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 165px solid transparent;
+    border-right: 165px solid transparent;
+    border-bottom: 120px solid #EDE6D8;
+    filter: drop-shadow(0 -3px 4px rgba(0,0,0,0.06));
+}
+
+.env-flap-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 165px solid transparent;
+    border-right: 165px solid transparent;
+    border-top: 115px solid #FAF6ED;
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.08));
+    transform-origin: top center;
+    transition: transform 0.6s ease;
+}
+
+/* Red Wax Seal in Center */
+.wax-seal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    width: 62px;
+    height: 62px;
+    background: radial-gradient(circle at 35% 35%, #FF2A85 0%, #D32F2F 50%, #8B0000 85%, #5c0000 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 6px 16px rgba(255, 42, 133, 0.5),
+        inset 0 2px 4px rgba(255, 255, 255, 0.35),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.envelope:hover .wax-seal {
+    transform: translate(-50%, -45%) scale(1.12);
+}
+
+.wax-seal-inner {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.seal-heart {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+}
+
+.seal-heart path {
+    fill: #FFF;
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 42, 133, 0.7);
+    animation: pulseRing 2s infinite;
+}
+
+@keyframes pulseRing {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Tap Hint text below envelope */
+.tap-hint {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(25, 10, 25, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 42, 133, 0.4);
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #FFF;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    animation: floatBounce 2s ease-in-out infinite;
+    cursor: pointer;
+}
+
+.tap-hint:hover {
+    background: rgba(255, 42, 133, 0.3);
+}
+
+@keyframes floatBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+
+/* ==========================================================================
+   HALAMAN 2: SURAT TERBUKA (PERFECTLY CENTERED & BALANCED)
+   ========================================================================== */
+.page-opened {
+    background: transparent !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 40px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page2-content {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* Floating Top Navigation Bar (Tombol Tutup Surat Melayang Di Kiri Atas Screen) */
+.top-nav-bar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    width: auto;
+}
+
+.back-btn {
+    background: rgba(25, 10, 25, 0.85);
+    border: 1px solid rgba(255, 42, 133, 0.4);
+    color: #FFF;
+    padding: 9px 20px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+    background: rgba(255, 42, 133, 0.5);
+    transform: scale(1.05);
+}
+
+/* Open Crimson Envelope Wrapper */
+.open-envelope-container {
+    position: relative;
+    width: 100%;
+    max-width: 350px;
+    margin-top: 130px;
+    margin-bottom: 20px;
+}
+
+.crimson-envelope {
+    position: relative;
+    width: 100%;
+    height: 310px;
+    background: var(--color-crimson-env);
+    background-image: radial-gradient(circle at 50% 50%, #8C111C 0%, #5E0710 100%);
+    border-radius: 6px;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(255, 42, 133, 0.3);
+}
+
+/* Open Flap top triangle pointing UP */
+.env-open-flap-top {
+    position: absolute;
+    top: -110px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 175px solid transparent;
+    border-right: 175px solid transparent;
+    border-bottom: 110px solid #8C111C;
+    filter: drop-shadow(0 -4px 8px rgba(0,0,0,0.3));
+    z-index: 2;
+}
+
+.env-open-inner-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 100%);
+    z-index: 3;
+}
+
+/* Ripped / Deckle Edge White Paper Letter inside envelope */
+.torn-paper-letter {
+    position: absolute;
+    top: -140px;
+    left: 15px;
+    right: 15px;
+    background: #FAF7F0;
+    border-radius: 2px;
+    box-shadow: 
+        0 -8px 25px rgba(0, 0, 0, 0.35),
+        0 4px 15px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    padding: 26px 20px 24px 20px;
+    transform: rotate(-1deg);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.5s ease;
+    cursor: pointer;
+}
+
+.torn-paper-letter:hover,
+.torn-paper-letter.expanded {
+    top: -175px;
+    transform: rotate(0deg) scale(1.02);
+    z-index: 20;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Deckle Ripped Edge SVG simulation top & bottom */
+.torn-edge-top {
+    position: absolute;
+    top: -12px;
+    left: 0;
+    width: 100%;
+    height: 14px;
+    background: #FAF7F0;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q30,90 60,30 Q90,110 120,40 Q150,80 180,20 Q210,100 240,30 Q270,90 300,40 Q330,110 360,20 Q390,80 420,30 Q450,100 480,20 Q510,90 540,40 Q570,110 600,30 Q630,90 660,40 Q690,110 720,20 Q750,80 780,30 Q810,100 840,20 Q870,90 900,40 Q930,110 960,30 Q990,90 1020,40 Q1050,110 1080,20 Q1110,80 1140,30 Q1170,100 1200,0 L1200,120 L0,120 Z' fill='%23FAF7F0'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q30,90 60,30 Q90,110 120,40 Q150,80 180,20 Q210,100 240,30 Q270,90 300,40 Q330,110 360,20 Q390,80 420,30 Q450,100 480,20 Q510,90 540,40 Q570,110 600,30 Q630,90 660,40 Q690,110 720,20 Q750,80 780,30 Q810,100 840,20 Q870,90 900,40 Q930,110 960,30 Q990,90 1020,40 Q1050,110 1080,20 Q1110,80 1140,30 Q1170,100 1200,0 L1200,120 L0,120 Z' fill='%23FAF7F0'/%3E%3C/svg%3E");
+}
+
+.torn-edge-bottom {
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 100%;
+    height: 14px;
+    background: #FAF7F0;
+    transform: rotate(180deg);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q30,90 60,30 Q90,110 120,40 Q150,80 180,20 Q210,100 240,30 Q270,90 300,40 Q330,110 360,20 Q390,80 420,30 Q450,100 480,20 Q510,90 540,40 Q570,110 600,30 Q630,90 660,40 Q690,110 720,20 Q750,80 780,30 Q810,100 840,20 Q870,90 900,40 Q930,110 960,30 Q990,90 1020,40 Q1050,110 1080,20 Q1110,80 1140,30 Q1170,100 1200,0 L1200,120 L0,120 Z' fill='%23FAF7F0'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0 Q30,90 60,30 Q90,110 120,40 Q150,80 180,20 Q210,100 240,30 Q270,90 300,40 Q330,110 360,20 Q390,80 420,30 Q450,100 480,20 Q510,90 540,40 Q570,110 600,30 Q630,90 660,40 Q690,110 720,20 Q750,80 780,30 Q810,100 840,20 Q870,90 900,40 Q930,110 960,30 Q990,90 1020,40 Q1050,110 1080,20 Q1110,80 1140,30 Q1170,100 1200,0 L1200,120 L0,120 Z' fill='%23FAF7F0'/%3E%3C/svg%3E");
+}
+
+/* Typography on torn letter paper */
+.letter-inner-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.letter-salutation {
+    font-family: var(--font-script);
+    font-size: 38px;
+    color: #8B0000;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.letter-body {
+    font-family: var(--font-typewriter);
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: #8B0000;
+}
+
+.letter-body p {
+    margin-bottom: 8px;
+}
+
+.highlight-text {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 6px !important;
+}
+
+.gen-z-note {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(139, 0, 0, 0.25);
+    font-family: var(--font-sans);
+    font-size: 10.5px;
+    color: #555;
+}
+
+.letter-closing {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.closing-phrase {
+    font-family: var(--font-typewriter);
+    font-size: 11px;
+    color: #8B0000;
+}
+
+.letter-signature {
+    font-family: var(--font-script);
+    font-size: 32px;
+    color: #8B0000;
+    margin-top: -4px;
+}
+
+/* Front envelope pockets */
+.env-open-pocket-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 310px solid #7A0C16;
+    border-right: 175px solid transparent;
+    z-index: 5;
+}
+
+.env-open-pocket-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 310px solid #6E0912;
+    border-left: 175px solid transparent;
+    z-index: 5;
+}
+
+.env-open-pocket-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 175px solid transparent;
+    border-right: 175px solid transparent;
+    border-bottom: 150px solid #850E19;
+    z-index: 6;
+    filter: drop-shadow(0 -3px 6px rgba(0,0,0,0.3));
+}
+
+/* Envelope Branding Text */
+.env-brand-left {
+    position: absolute;
+    bottom: 12px;
+    left: 16px;
+    z-index: 7;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 8.5px;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.3;
+}
+
+.env-brand-right {
+    position: absolute;
+    bottom: 12px;
+    right: 16px;
+    z-index: 7;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 8.5px;
+    letter-spacing: 0.5px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.3;
+    text-align: right;
+}
+
+/* Silk Cream Ribbon Bow overlay bottom right */
+.cream-ribbon-wrapper {
+    position: absolute;
+    bottom: 20px;
+    right: -10px;
+    z-index: 15;
+    pointer-events: none;
+}
+
+.ribbon-bow {
+    position: relative;
+    width: 120px;
+    height: 100px;
+}
+
+.bow-knot {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #F9F4EA 0%, #DED0B8 100%);
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.8);
+    z-index: 12;
+}
+
+.bow-loop {
+    position: absolute;
+    top: 25px;
+    width: 55px;
+    height: 38px;
+    background: linear-gradient(135deg, #FAF6EE 0%, #E8DCBE 60%, #D8C7A4 100%);
+    border-radius: 50% 50% 40% 40%;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25), inset 0 3px 6px rgba(255,255,255,0.6);
+    z-index: 11;
+}
+
+.loop-left {
+    left: 5px;
+    transform: rotate(-25deg);
+    border-radius: 60% 40% 50% 50%;
+}
+
+.loop-right {
+    right: 5px;
+    transform: rotate(25deg);
+    border-radius: 40% 60% 50% 50%;
+}
+
+.ribbon-tail {
+    position: absolute;
+    top: 50px;
+    width: 18px;
+    background: linear-gradient(180deg, #F3EBDD 0%, #DCCBB0 100%);
+    border-radius: 4px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    z-index: 9;
+}
+
+.tail-left {
+    left: 40px;
+    height: 70px;
+    transform: rotate(20deg);
+}
+
+.tail-right {
+    left: 58px;
+    height: 85px;
+    transform: rotate(-15deg);
+}
+
+.tail-long {
+    left: 48px;
+    height: 110px;
+    width: 16px;
+    transform: rotate(5deg);
+    opacity: 0.85;
+}
+
+/* Floating Particles (Hearts / Stars) */
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    font-size: 16px;
+    opacity: 0.7;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) rotate(0deg) scale(0.6);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Responsive adjustments for Mobile Phones */
+@media (max-width: 480px) {
+    .music-widget { top: 12px; right: 12px; padding: 4px 10px 4px 6px; }
+    .disc-container { width: 28px; height: 28px; }
+    .word-hello { font-size: 64px; }
+    .word-love { font-size: 74px; margin-left: 25px; }
+    
+    .heart-stipple-wrapper { width: 260px; height: 260px; top: 0; right: -50px; }
+    
+    .envelope-wrapper { margin-top: 70px; }
+    .envelope { width: 290px; height: 195px; }
+    .env-fold-left { border-left-width: 145px; border-top-width: 97px; border-bottom-width: 97px; }
+    .env-fold-right { border-right-width: 145px; border-top-width: 97px; border-bottom-width: 97px; }
+    .env-fold-bottom { border-left-width: 145px; border-right-width: 145px; border-bottom-width: 105px; }
+    .env-flap-top { border-left-width: 145px; border-right-width: 145px; border-top-width: 100px; }
+    
+    .open-envelope-container { max-width: 310px; margin-top: 110px; }
+    .crimson-envelope { height: 280px; }
+    .env-open-flap-top { border-left-width: 155px; border-right-width: 155px; border-bottom-width: 95px; top: -95px; }
+    .torn-paper-letter { left: 10px; right: 10px; padding: 20px 15px; top: -130px; }
+    .letter-salutation { font-size: 32px; }
+    .letter-body { font-size: 11px; }
+    .letter-signature { font-size: 28px; }
+}

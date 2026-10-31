@@ -295,18 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 550);
     }
 
-        setTimeout(() => {
-            showPage(page2);
-            setTimeout(() => {
-                if (waxSeal) {
-                    waxSeal.style.transform = 'translate(-50%, -45%) scale(1)';
-                    waxSeal.style.opacity = '1';
-                }
-                if (envFlap) envFlap.style.transform = 'rotateX(0deg)';
-            }, 600);
-        }, 550);
-    }
-
     function showPage(targetPage) {
         [page1, page2].forEach(p => {
             if (p) {

@@ -1,6 +1,6 @@
 /* ==========================================================================
-   UNDANGAN DIGITAL SPESIAL UNTUK TALITHA
-   Three.js "Hyperspeed" Pink/Magenta Gradient Background & Invitation Logic
+   KARTU DIGITAL SPESIAL UNTUK EVITA
+   Three.js "Hyperspeed" Pink/Magenta Gradient Background & Birthday Card Logic
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -259,15 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==========================================================================
-    // 3. AUDIO PLAYER FOR "AWAL KISAH SELAMANYA"
+    // 3. PAGE NAVIGATION & ELEMENTS
     // ==========================================================================
-    const bgMusic = document.getElementById('bg-music');
-    const vinylDisc = document.getElementById('vinyl-disc');
-    const songStatus = document.getElementById('song-status');
-    const musicToggleBtn = document.getElementById('music-toggle-btn');
-    const playIcon = document.getElementById('play-icon');
-    const pauseIcon = document.getElementById('pause-icon');
-
     const page1 = document.getElementById('page-1');
     const page2 = document.getElementById('page-2');
 
@@ -277,69 +270,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const tornLetter = document.getElementById('torn-letter');
     const btnBackToP1 = document.getElementById('btn-back-to-p1');
 
-    let isMusicPlaying = false;
-
-    if (bgMusic) {
-        bgMusic.volume = 0.7;
-    }
-
-    function playMusic() {
-        if (!bgMusic) return;
-        
-        bgMusic.play().then(() => {
-            isMusicPlaying = true;
-            if (vinylDisc) vinylDisc.classList.add('spinning');
-            if (songStatus) songStatus.textContent = 'Playing • Awal Kisah Selamanya';
-            if (playIcon) playIcon.classList.add('hidden');
-            if (pauseIcon) pauseIcon.classList.remove('hidden');
-            createHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
-        }).catch(err => {
-            console.log('Autoplay waiting for tap:', err);
-            if (songStatus) songStatus.textContent = 'Klik love pada surat untuk memutar lagu 🎵';
-        });
-    }
-
-    function pauseMusic() {
-        if (!bgMusic) return;
-        bgMusic.pause();
-        isMusicPlaying = false;
-        if (vinylDisc) vinylDisc.classList.remove('spinning');
-        if (songStatus) songStatus.textContent = 'Paused';
-        if (playIcon) playIcon.classList.remove('hidden');
-        if (pauseIcon) pauseIcon.classList.add('hidden');
-    }
-
-    function toggleMusic() {
-        if (isMusicPlaying) {
-            pauseMusic();
-        } else {
-            playMusic();
-        }
-    }
-
-    if (musicToggleBtn) {
-        musicToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleMusic();
-        });
-    }
-
-
-    // ==========================================================================
-    // 4. PAGE NAVIGATION & ANIMATIONS
-    // ==========================================================================
     function openEnvelopeAndTransition() {
         if (waxSeal) {
             waxSeal.style.transform = 'translate(-50%, -45%) scale(1.3)';
             waxSeal.style.opacity = '0.7';
         }
 
-        playMusic();
+        createHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
 
         const envFlap = document.querySelector('.env-flap-top');
         if (envFlap) {
             envFlap.style.transform = 'rotateX(180deg)';
         }
+
+        setTimeout(() => {
+            showPage(page2);
+            setTimeout(() => {
+                if (waxSeal) {
+                    waxSeal.style.transform = 'translate(-50%, -45%) scale(1)';
+                    waxSeal.style.opacity = '1';
+                }
+                if (envFlap) envFlap.style.transform = 'rotateX(0deg)';
+            }, 600);
+        }, 550);
+    }
 
         setTimeout(() => {
             showPage(page2);
@@ -442,6 +396,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => heart.remove(), 1000);
         }
+    }
+
+
+    // ==========================================================================
+    // 5. VIDEO PLAYBACK LOGIC (INLINE & MODAL POPUP)
+    // ==========================================================================
+    const videoModal = document.getElementById('video-modal');
+    const videoModalBackdrop = document.getElementById('video-modal-backdrop');
+    const btnCloseVideo = document.getElementById('btn-close-video');
+    const btnLetterVideo = document.getElementById('btn-letter-video');
+    const btnTopVideo = document.getElementById('btn-top-video');
+    const birthdayVideo = document.getElementById('birthday-video');
+    const inlineVideo = document.getElementById('inline-birthday-video');
+    const videoCardSection = document.getElementById('video-card-section');
+
+    // Ensure audio/volume is enabled and unmuted
+    [birthdayVideo, inlineVideo].forEach(v => {
+        if (v) {
+            v.volume = 1.0;
+            v.muted = false;
+        }
+    });
+
+    function openVideoModal() {
+        if (!videoModal) return;
+        videoModal.classList.remove('hidden');
+        if (inlineVideo) inlineVideo.pause();
+        
+        if (birthdayVideo) {
+            birthdayVideo.volume = 1.0;
+            birthdayVideo.muted = false;
+            birthdayVideo.play().catch(err => {
+                console.log('Video tap to play required:', err);
+            });
+        }
+    }
+
+    function closeVideoModal() {
+        if (!videoModal) return;
+        videoModal.classList.add('hidden');
+        if (birthdayVideo) {
+            birthdayVideo.pause();
+        }
+    }
+
+    function scrollToInlineVideo() {
+        if (videoCardSection) {
+            videoCardSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (inlineVideo) {
+                inlineVideo.volume = 1.0;
+                inlineVideo.muted = false;
+                inlineVideo.play().catch(err => console.log('Tap play:', err));
+            }
+        } else {
+            openVideoModal();
+        }
+    }
+
+    if (btnLetterVideo) btnLetterVideo.addEventListener('click', (e) => {
+        e.stopPropagation();
+        scrollToInlineVideo();
+    });
+
+    if (btnTopVideo) btnTopVideo.addEventListener('click', scrollToInlineVideo);
+    if (btnCloseVideo) btnCloseVideo.addEventListener('click', closeVideoModal);
+    if (videoModalBackdrop) videoModalBackdrop.addEventListener('click', closeVideoModal);
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoModal && !videoModal.classList.contains('hidden')) {
+            closeVideoModal();
+        }
+    });
+
+    if (inlineVideo && birthdayVideo) {
+        inlineVideo.addEventListener('play', () => birthdayVideo.pause());
+        birthdayVideo.addEventListener('play', () => inlineVideo.pause());
     }
 
 });

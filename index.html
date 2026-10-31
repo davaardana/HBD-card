@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Undangan Spesial untuk Talitha ✉️✨</title>
+    <title>Happy Birthday Evita Ke-23! 🎂💖</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,28 +22,6 @@
 
     <!-- Fullscreen Hyperspeed Canvas Background (Pink/Magenta Gradient) -->
     <div id="hyperspeed-container" class="hyperspeed-container"></div>
-
-    <!-- Local Audio Player for "Awal Kisah Selamanya" -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="awalkisahselamanya.mp3" type="audio/mpeg">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-wedding-love-116035.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Floating Audio Control Widget -->
-    <div class="music-widget" id="music-widget">
-        <div class="disc-container">
-            <div class="vinyl-disc" id="vinyl-disc"></div>
-            <div class="music-note-icon">🎵</div>
-        </div>
-        <div class="song-info">
-            <span class="song-title">Awal Kisah Selamanya</span>
-            <span class="song-status" id="song-status">Tap love to play music 💖</span>
-        </div>
-        <button class="music-toggle-btn" id="music-toggle-btn" aria-label="Toggle Music">
-            <svg id="play-icon" viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
-            <svg id="pause-icon" viewBox="0 0 24 24" class="icon hidden"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
-    </div>
 
     <!-- Mouse Cursor Trail Container (Pure Love Vector Trail) -->
     <div id="love-cursor-container" class="love-cursor-container"></div>
@@ -64,10 +42,10 @@
                     <img src="stippled_red_heart.png" class="heart-stipple-png" alt="Stippled Red Heart">
                 </div>
 
-                <!-- Calligraphy Heading Top Left (Hello Talitha,) -->
+                <!-- Calligraphy Heading Top Left (Hello Evita,) -->
                 <div class="header-calligraphy">
                     <span class="word-hello">Hello</span>
-                    <span class="word-love">Talitha,</span>
+                    <span class="word-love">Evita,</span>
                 </div>
 
                 <!-- Envelope Sealed Container -->
@@ -108,11 +86,14 @@
             <div class="dark-mood-bg"></div>
 
             <div class="page2-content">
-                <!-- Floating Top Navigation Bar (Tombol Tutup Surat Melayang Di Kiri Atas) -->
+                <!-- Floating Top Navigation Bar (Tombol Tutup Surat & Video Spesial) -->
                 <div class="top-nav-bar">
                     <button class="back-btn" id="btn-back-to-p1">
                         <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                         Tutup Surat
+                    </button>
+                    <button class="video-nav-btn" id="btn-top-video">
+                        <span>🎬</span> Video Spesial
                     </button>
                 </div>
 
@@ -128,21 +109,23 @@
                             <div class="torn-edge-top"></div>
                             
                             <div class="letter-inner-content">
-                                <h1 class="letter-salutation">Dear Talitha,</h1>
+                                <h1 class="letter-salutation">Dear Evita,</h1>
                                 
                                 <div class="letter-body">
-                                    <p class="highlight-text">Maaf ya untuk semuanya... 🥺💖</p>
-                                    <p>Dari lubuk hati yang paling dalam, aku mau minta maaf kalau pernah bikin kamu sedih, kecewa, atau pernah nyakitin perasaan kamu, baik secara sengaja maupun enggak sengaja.</p>
-                                    <p>Kamu tuh sosok yang sangat berharga dan spesial. Aku beneran nyesel atas segala kesalahan yang pernah ada. I hope you can find peace, joy, and forgive me in your heart.</p>
-                                    
-                                    <div class="gen-z-note">
-                                        <p>✨ <em>I’m so so sorry for everything, Talitha... honestly no excuses at all. You deserve all the peace, love & happiness in the world, and I truly hope we can be good again. For real, I'm genuinely sorry from the bottom of my heart 💖</em></p>
-                                    </div>
+                                    <p class="highlight-text">Happy birthday yang ke-23, Evita Sayangggg! 🎂✨</p>
+                                    <p>Semoga makin cantik, makin bahagia, dan makin banyak hal baik yang datang.</p>
+                                    <p>Semoga di usia baru ini, kita bisa lebih sering deeptalk, ketemu, dan sama sama terus yaaa 🥰💖</p>
                                 </div>
 
                                 <div class="letter-closing">
-                                    <span class="closing-phrase">With all my heart & sincere apology,</span>
-                                    <span class="letter-signature">Special For Talitha 💖</span>
+                                    <span class="closing-phrase">With all my love & warmest hugs,</span>
+                                    <span class="letter-signature">Special For Evita 💖</span>
+                                </div>
+
+                                <div class="letter-video-cta">
+                                    <button class="btn-letter-video" id="btn-letter-video" type="button">
+                                        🎬 Tonton Video Spesial
+                                    </button>
                                 </div>
                             </div>
                             
@@ -156,10 +139,10 @@
 
                         <!-- Envelope Details Typography -->
                         <div class="env-brand-left">
-                            SPECIAL EDITION<br>FOR TALITHA
+                            SPECIAL EDITION<br>FOR EVITA
                         </div>
                         <div class="env-brand-right">
-                            WITH SINCERE<br>LOVE & APOLOGY
+                            HAPPY 23RD<br>BIRTHDAY 🎂
                         </div>
 
                         <!-- Silk Cream Ribbon Bow overlay -->
@@ -176,10 +159,56 @@
                     </div>
                 </div>
 
+                <!-- Video Section directly displayed on Page 2 -->
+                <div class="video-card-section" id="video-card-section">
+                    <div class="video-section-header">
+                        <span class="video-section-sparkle">✨</span>
+                        <h2 class="video-section-title">Video Spesial untuk Evita 💖</h2>
+                        <span class="video-section-sparkle">✨</span>
+                    </div>
+                    <div class="video-player-container">
+                        <video id="inline-birthday-video" controls playsinline preload="auto">
+                            <source src="evita.mp4" type="video/mp4">
+                            <source src="IMG_2064.MOV" type="video/quicktime">
+                            <source src="evita.mov" type="video/quicktime">
+                            Browser kamu tidak mendukung pemutaran video.
+                        </video>
+                    </div>
+                </div>
+
             </div>
         </section>
 
     </main>
+
+    <!-- Video Modal Popup -->
+    <div class="video-modal hidden" id="video-modal">
+        <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+        <div class="video-modal-card">
+            <div class="video-modal-header">
+                <div class="video-modal-title">
+                    <span class="video-modal-icon">🎬</span>
+                    <span>Video Spesial untuk Evita 💖</span>
+                </div>
+                <button class="video-modal-close" id="btn-close-video" aria-label="Tutup Video">&times;</button>
+            </div>
+            
+            <div class="video-modal-body">
+                <div class="video-wrapper">
+                    <video id="birthday-video" controls playsinline preload="auto">
+                        <source src="evita.mp4" type="video/mp4">
+                        <source src="IMG_2064.MOV" type="video/quicktime">
+                        <source src="evita.mov" type="video/quicktime">
+                        Browser kamu tidak mendukung pemutaran video.
+                    </video>
+                </div>
+            </div>
+
+            <div class="video-modal-footer">
+                <span class="footer-tip">🎬 Video IMG_2064 (dengan suara asli)</span>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -124,7 +124,7 @@
 
                                 <div class="letter-video-cta">
                                     <button class="btn-letter-video" id="btn-letter-video" type="button">
-                                        🎬 Tonton Video Spesial
+                                        🎬 Putar Ulang Video
                                     </button>
                                 </div>
                             </div>
@@ -159,20 +159,25 @@
                     </div>
                 </div>
 
-                <!-- Video Section directly displayed on Page 2 -->
+                <!-- Video Section placed side-by-side with envelope -->
                 <div class="video-card-section" id="video-card-section">
                     <div class="video-section-header">
                         <span class="video-section-sparkle">✨</span>
-                        <h2 class="video-section-title">Video Spesial untuk Evita 💖</h2>
+                        <h2 class="video-section-title">Video Spesial Evita 💖</h2>
                         <span class="video-section-sparkle">✨</span>
                     </div>
-                    <div class="video-player-container">
-                        <video id="inline-birthday-video" controls playsinline preload="auto">
+                    <div class="video-player-container" id="video-container-clickable">
+                        <video id="inline-birthday-video" autoplay playsinline loop preload="auto">
                             <source src="evita.mp4" type="video/mp4">
                             <source src="IMG_2064.MOV" type="video/quicktime">
-                            <source src="evita.mov" type="video/quicktime">
                             Browser kamu tidak mendukung pemutaran video.
                         </video>
+                        <div class="video-controls-overlay">
+                            <button class="video-audio-toggle" id="video-audio-toggle" type="button" title="Nyalakan / Matikan Suara">
+                                <span id="audio-icon">🔊</span>
+                            </button>
+                            <span class="video-status-pill">▶ Auto Playing</span>
+                        </div>
                     </div>
                 </div>
 

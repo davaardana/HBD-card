@@ -278,6 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         createHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
 
+        // Instantly start video autoplay with sound on user gesture
+        startInlineVideoAutoplay();
+
         const envFlap = document.querySelector('.env-flap-top');
         if (envFlap) {
             envFlap.style.transform = 'rotateX(180deg)';
@@ -285,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             showPage(page2);
+            startInlineVideoAutoplay();
             setTimeout(() => {
                 if (waxSeal) {
                     waxSeal.style.transform = 'translate(-50%, -45%) scale(1)';
@@ -388,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // ==========================================================================
-    // 5. VIDEO PLAYBACK LOGIC (INLINE & MODAL POPUP)
+    // 5. VIDEO AUTOPLAY & CONTROLS (INLINE & MODAL POPUP)
     // ==========================================================================
     const videoModal = document.getElementById('video-modal');
     const videoModalBackdrop = document.getElementById('video-modal-backdrop');
@@ -398,6 +402,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const birthdayVideo = document.getElementById('birthday-video');
     const inlineVideo = document.getElementById('inline-birthday-video');
     const videoCardSection = document.getElementById('video-card-section');
+    const videoAudioToggle = document.getElementById('video-audio-toggle');
+    const audioIcon = document.getElementById('audio-icon');
 
     // Ensure audio/volume is enabled and unmuted
     [birthdayVideo, inlineVideo].forEach(v => {
@@ -407,6 +413,77 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function updateAudioBadge() {
+        if (!inlineVideo || !audioIcon) return;
+        if (inlineVideo.muted || inlineVideo.volume === 0) {
+            audioIcon.textContent = '🔇';
+        } else {
+            audioIcon.textContent = '🔊';
+        }
+    }
+
+    function startInlineVideoAutoplay() {
+        if (!inlineVideo) return;
+        inlineVideo.volume = 1.0;
+        inlineVideo.muted = false;
+        const p = inlineVideo.play();
+        if (p !== undefined) {
+            p.then(() => {
+                updateAudioBadge();
+            }).catch(err => {
+                console.log('Unmuted autoplay restricted, attempting muted autoplay:', err);
+                inlineVideo.muted = true;
+                inlineVideo.play().then(() => updateAudioBadge()).catch(console.error);
+            });
+        }
+    }
+
+    if (videoAudioToggle && inlineVideo) {
+        videoAudioToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            inlineVideo.muted = !inlineVideo.muted;
+            if (!inlineVideo.muted && inlineVideo.volume === 0) {
+                inlineVideo.volume = 1.0;
+            }
+            updateAudioBadge();
+        });
+    }
+
+    // Clicking anywhere on the video toggles pause/play
+    if (inlineVideo) {
+        inlineVideo.addEventListener('click', () => {
+            if (inlineVideo.paused) {
+                inlineVideo.play();
+            } else {
+                inlineVideo.pause();
+            }
+        });
+    }
+
+    // Replay on letter button or top nav click
+    function replayInlineVideo() {
+        if (inlineVideo) {
+            inlineVideo.currentTime = 0;
+            inlineVideo.volume = 1.0;
+            inlineVideo.muted = false;
+            inlineVideo.play().then(() => updateAudioBadge()).catch(console.error);
+        }
+        if (videoCardSection && window.innerWidth <= 820) {
+            videoCardSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    if (btnLetterVideo) {
+        btnLetterVideo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            replayInlineVideo();
+        });
+    }
+
+    if (btnTopVideo) {
+        btnTopVideo.addEventListener('click', replayInlineVideo);
+    }
+
     function openVideoModal() {
         if (!videoModal) return;
         videoModal.classList.remove('hidden');
@@ -415,9 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (birthdayVideo) {
             birthdayVideo.volume = 1.0;
             birthdayVideo.muted = false;
-            birthdayVideo.play().catch(err => {
-                console.log('Video tap to play required:', err);
-            });
+            birthdayVideo.play().catch(console.error);
         }
     }
 
@@ -427,27 +502,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (birthdayVideo) {
             birthdayVideo.pause();
         }
-    }
-
-    function scrollToInlineVideo() {
-        if (videoCardSection) {
-            videoCardSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            if (inlineVideo) {
-                inlineVideo.volume = 1.0;
-                inlineVideo.muted = false;
-                inlineVideo.play().catch(err => console.log('Tap play:', err));
-            }
-        } else {
-            openVideoModal();
+        if (inlineVideo) {
+            inlineVideo.play().catch(console.error);
         }
     }
 
-    if (btnLetterVideo) btnLetterVideo.addEventListener('click', (e) => {
-        e.stopPropagation();
-        scrollToInlineVideo();
-    });
-
-    if (btnTopVideo) btnTopVideo.addEventListener('click', scrollToInlineVideo);
     if (btnCloseVideo) btnCloseVideo.addEventListener('click', closeVideoModal);
     if (videoModalBackdrop) videoModalBackdrop.addEventListener('click', closeVideoModal);
 
@@ -461,5 +520,13 @@ document.addEventListener('DOMContentLoaded', () => {
         inlineVideo.addEventListener('play', () => birthdayVideo.pause());
         birthdayVideo.addEventListener('play', () => inlineVideo.pause());
     }
+
+    // Unmute on first click anywhere if initial unmuted autoplay was blocked
+    document.addEventListener('click', () => {
+        if (inlineVideo && inlineVideo.muted) {
+            inlineVideo.muted = false;
+            updateAudioBadge();
+        }
+    }, { once: true });
 
 });

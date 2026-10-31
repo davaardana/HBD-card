@@ -475,8 +475,8 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding: 70px 20px 60px 20px;
+    justify-content: center;
+    padding: 30px 20px;
     position: relative;
     overflow-y: auto;
     overflow-x: hidden;
@@ -487,12 +487,13 @@ html, body {
     position: relative;
     z-index: 5;
     width: 100%;
-    max-width: 420px;
+    max-width: 900px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
+    gap: 36px;
+    margin: auto 0;
 }
 
 /* Floating Top Navigation Bar */
@@ -565,9 +566,10 @@ html, body {
 .open-envelope-container {
     position: relative;
     width: 100%;
-    max-width: 350px;
-    margin-top: 130px;
-    margin-bottom: 20px;
+    max-width: 340px;
+    margin-top: 80px;
+    margin-bottom: 0;
+    flex-shrink: 0;
 }
 
 .crimson-envelope {
@@ -915,48 +917,59 @@ html, body {
     }
 }
 
-/* Video Card Section directly displayed on Page 2 */
+/* Video Card Section placed side-by-side with envelope */
 .video-card-section {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 0;
+    margin-top: -20px;
     width: 100%;
-    max-width: 400px;
-    background: rgba(23, 9, 27, 0.9);
+    max-width: 290px;
+    flex-shrink: 0;
+    background: rgba(23, 9, 27, 0.92);
     border: 1px solid rgba(255, 42, 133, 0.5);
     border-radius: 20px;
-    padding: 18px 16px;
+    padding: 14px 12px 14px 12px;
     box-shadow: 
         0 15px 40px rgba(0, 0, 0, 0.7),
         0 0 30px rgba(255, 42, 133, 0.3);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
     z-index: 10;
+    transition: transform 0.3s ease;
+}
+
+.video-card-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 20px 45px rgba(0, 0, 0, 0.8),
+        0 0 35px rgba(255, 42, 133, 0.4);
 }
 
 .video-section-header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .video-section-title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #FF80BF;
     text-shadow: 0 0 10px rgba(255, 42, 133, 0.6);
+    letter-spacing: 0.5px;
 }
 
 .video-player-container {
     width: 100%;
     border-radius: 14px;
     overflow: hidden;
-    background: #000;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-    max-height: 520px;
+    background: #0b020e;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+    position: relative;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -964,11 +977,60 @@ html, body {
 
 .video-player-container video {
     width: 100%;
-    max-height: 500px;
+    max-height: 410px;
     object-fit: contain;
-    background: #000;
+    background: #0b020e;
     outline: none;
     border-radius: 14px;
+    display: block;
+}
+
+.video-controls-overlay {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.video-audio-toggle {
+    pointer-events: auto;
+    background: rgba(18, 5, 22, 0.85);
+    border: 1px solid rgba(255, 42, 133, 0.6);
+    color: #FFF;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.video-audio-toggle:hover {
+    transform: scale(1.1);
+    background: rgba(255, 42, 133, 0.5);
+}
+
+.video-status-pill {
+    background: rgba(18, 5, 22, 0.85);
+    border: 1px solid rgba(255, 42, 133, 0.4);
+    color: #FF80BF;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
@@ -1189,7 +1251,28 @@ html, body {
     color: #FFF;
 }
 
-/* Responsive adjustments for Mobile Phones */
+/* Responsive adjustments for Tablets & Mobile Phones */
+@media (max-width: 820px) {
+    .page-opened {
+        justify-content: flex-start;
+        padding-top: 70px;
+        padding-bottom: 50px;
+        overflow-y: auto;
+    }
+    .page2-content {
+        flex-direction: column;
+        gap: 35px;
+        max-width: 400px;
+    }
+    .open-envelope-container {
+        margin-top: 90px;
+    }
+    .video-card-section {
+        margin-top: 0;
+        max-width: 310px;
+    }
+}
+
 @media (max-width: 480px) {
     .music-widget { top: 12px; right: 12px; padding: 4px 10px 4px 6px; }
     .disc-container { width: 28px; height: 28px; }
@@ -1205,7 +1288,7 @@ html, body {
     .env-fold-bottom { border-left-width: 145px; border-right-width: 145px; border-bottom-width: 105px; }
     .env-flap-top { border-left-width: 145px; border-right-width: 145px; border-top-width: 100px; }
     
-    .open-envelope-container { max-width: 310px; margin-top: 90px; }
+    .open-envelope-container { max-width: 310px; margin-top: 85px; }
     .crimson-envelope { height: 280px; }
     .env-open-flap-top { border-left-width: 155px; border-right-width: 155px; border-bottom-width: 95px; top: -95px; }
     .torn-paper-letter { left: 10px; right: 10px; padding: 20px 15px; top: -130px; }
@@ -1213,8 +1296,8 @@ html, body {
     .letter-body { font-size: 11px; }
     .letter-signature { font-size: 28px; }
 
+    .video-card-section { max-width: 280px; }
     .video-modal-card { padding: 14px; max-height: 94vh; }
-    .btn-open-video-main { font-size: 13px; padding: 11px 22px; }
     .top-nav-bar { top: 12px; left: 12px; right: 12px; width: calc(100% - 24px); }
     .video-nav-btn { font-size: 12px; padding: 7px 14px; }
     .back-btn { font-size: 12px; padding: 7px 14px; }
